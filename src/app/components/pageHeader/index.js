@@ -8,7 +8,7 @@ export default function PageHeader() {
   const remaining = pathname.slice(2)
   const title = capitalize + remaining
   return (
-    <div className="w-full mb-10">
+    <div className="w-full mb-8">
       <h3 className="text-3xl font-semibold text-amber-600">{title}</h3>
     </div>
   );

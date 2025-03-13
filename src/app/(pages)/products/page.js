@@ -1,7 +1,9 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import StyledTable from "@/app/components/table";
 import OrangeButton from "@/app/components/orangeButton";
 import Link from "next/link";
+import { fetchAllProductsApi } from "@/app/utils/api/product-api";
 
 export default function ProductsPage() {
   const headerList = [
@@ -31,6 +33,17 @@ export default function ProductsPage() {
       type: "number",
     },
   ];
+
+  const [products, setProducts] = useState(undefined);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetchAllProductsApi();
+      //console.log(res)
+      setProducts(res.data);
+    };
+    fetchData();
+  }, []);
 
   const rowData = [
     {
@@ -110,19 +123,57 @@ export default function ProductsPage() {
       product_price: 24000,
       stock_quantity: 50,
     },
+    {
+      product_id: "PD002",
+      product_name: "Snack",
+      product_category: "Food & Beverage",
+      product_price: 24000,
+      stock_quantity: 50,
+    },
+    {
+      product_id: "PD002",
+      product_name: "Snack",
+      product_category: "Food & Beverage",
+      product_price: 24000,
+      stock_quantity: 50,
+    },
+    {
+      product_id: "PD002",
+      product_name: "Snack",
+      product_category: "Food & Beverage",
+      product_price: 24000,
+      stock_quantity: 50,
+    },
+    {
+      product_id: "PD002",
+      product_name: "Snack",
+      product_category: "Food & Beverage",
+      product_price: 24000,
+      stock_quantity: 50,
+    },
+    {
+      product_id: "PD002",
+      product_name: "Snack",
+      product_category: "Food & Beverage",
+      product_price: 24000,
+      stock_quantity: 50,
+    },
   ];
   return (
-    <div className=" w-full h-full overflow-y-hidden  bg-white rounded-md drop-shadow-md p-5">
+    <div className=" w-full max-h-fit overflow-y-hidden  bg-white rounded-md drop-shadow-md p-5">
       <div>
         <Link href={"/products/create"}>
-        <OrangeButton label={"Add New Product"}  /></Link>
+          <OrangeButton label={"Add New Product"} />
+        </Link>
       </div>
       <div className="h-full">
-        <StyledTable
-          headerData={headerList}
-          rowData={rowData}
-          route={"products"}
-        ></StyledTable>
+        {products != undefined && (
+          <StyledTable
+            headerData={headerList}
+            rowData={products}
+            route={"products"}
+          />
+        )}
       </div>
     </div>
   );

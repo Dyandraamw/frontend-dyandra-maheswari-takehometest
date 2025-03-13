@@ -3,13 +3,13 @@ import Link from "next/link";
 
 export default function StyledTable({ headerData, rowData, route }) {
   return (
-    <div className="overflow-y-auto h-full">
-      <table className="w-full  table-auto   ">
-        <thead className="bg-amber-600 text-white">
+    <div className="overflow-y-auto h-full max-h-9/10">
+      <table className="w-full   ">
+        <thead className="bg-amber-600 text-white sticky top-0 ">
           <tr>
             {headerData.map((item) => {
               return (
-                <th key={item.id} className="text-left p-2">
+                <th key={item.id} className=" text-left p-2">
                   {item.label}
                 </th>
               );
@@ -17,13 +17,31 @@ export default function StyledTable({ headerData, rowData, route }) {
           </tr>
         </thead>
         <tbody>
-          {rowData && rowData.map((row, idx) => {
-            return (
-              <tr
-                key={idx}
-                className={`${idx % 2 != 0 ? "bg-gray-200" : "bg-white"}`}
-              >
-                {Object.entries(row).map(([key, val]) => (
+          {rowData != undefined &&
+            rowData.map((row, idx) => {
+              return (
+                <tr
+                  key={idx}
+                  className={`${idx % 2 != 0 ? "bg-gray-200" : "bg-white"}`}
+                >
+                  {headerData.map((key) => {
+                    return (
+                      <td
+                        key={key.id}
+                        className={
+                          "p-3 " +
+                          (key.id.includes("id") ? "hover:text-amber-600" : "")
+                        }
+                      >
+                        <Link
+                          href={key.id.includes("id") ? `/${route}/${row[key.id]}` : "#"}
+                        >
+                          {row[key.id]}
+                        </Link>
+                      </td>
+                    );
+                  })}
+                  {/* {Object.entries(row).map(([key, val]) => (
                   <td
                     key={key}
                     className={
@@ -35,10 +53,10 @@ export default function StyledTable({ headerData, rowData, route }) {
                       {val}{" "}
                     </Link>
                   </td>
-                ))}
-              </tr>
-            );
-          })}
+                ))} */}
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>

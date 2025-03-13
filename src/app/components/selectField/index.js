@@ -8,7 +8,7 @@ export default function SelectField({
   placeholder,
   value,
   disabled,
-  defaultValue = false,
+  defaultValue ,
   selectData,
 }) {
   return (

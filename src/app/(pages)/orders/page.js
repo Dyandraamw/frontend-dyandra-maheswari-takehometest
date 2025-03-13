@@ -1,7 +1,9 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import StyledTable from "@/app/components/table";
 import OrangeButton from "@/app/components/orangeButton";
 import Link from "next/link";
+import { fetchAllOrdersApi } from "@/app/utils/api/order-api";
 
 export default function OrdersPage() {
   const headerList = [
@@ -31,6 +33,17 @@ export default function OrdersPage() {
       type: "money",
     },
   ];
+
+  const [orders, setOrders] = useState(undefined);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetchAllOrdersApi();
+      //console.log(res)
+      setOrders(res.data);
+    };
+    fetchData();
+  }, []);
 
   const rowData = [
     {
@@ -63,11 +76,13 @@ export default function OrdersPage() {
         </Link>
       </div>
       <div className="h-full">
-        <StyledTable
-          headerData={headerList}
-          rowData={rowData}
-          route={"orders"}
-        ></StyledTable>
+        {orders != undefined && (
+          <StyledTable
+            headerData={headerList}
+            rowData={orders}
+            route={"orders"}
+          />
+        )}
       </div>
     </div>
   );
